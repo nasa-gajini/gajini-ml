@@ -1,7 +1,7 @@
 import h5py
 import numpy as np
 # HDF5 파일 경로
-file_path = './tmp/SMAP_L3_SM_P_E_20240929_R19240_002.h5'
+file_path = './SMAP_L3_SM_P_E_20240801_R19240_002.h5'
 
 # 파일 열기
 
