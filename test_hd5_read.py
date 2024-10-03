@@ -29,10 +29,12 @@ with h5py.File(file_path, 'r') as file:
 
         # 토양 수분 데이터셋 접근
         if 'Soil_Moisture_Retrieval_Data_AM/soil_moisture' in file:
-            soil_moisture = file['Soil_Moisture_Retrieval_Data_AM/soil_moisture'][lat_idx, lon_idx]
+            soil_moisture = file['Soil_Moisture_Retrieval_Data_AM/soil_moisture']#[lat_idx, lon_idx]
             print(f"Soil Moisture Data at Latitude {target_lat} and Longitude {target_lon}:")
             print("Soil moisture : "+str(soil_moisture) + "%")
         else:
             print("Soil moisture dataset not found in the file.")
     else:
         print("Latitude or longitude dataset not found in the file.")
+
+
