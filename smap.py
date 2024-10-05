@@ -1,7 +1,33 @@
 import h5py
 import numpy as np
+
+
+
+class SmapDataset:
+    def __init__(self, file_path):
+
+        # 파일 열기
+        file = h5py.File(file_path, 'r')
+
+        ds_dict = {}
+
+        print(file.keys())
+        for key in file.keys():
+            # np array로 바꿀수 있는것만 변환
+            # 하위 데이터 딕셔너리도 모두 순회하며 np array로 변환
+            if isinstance(file[key], h5py.Dataset):
+                ds_dict[key] = np.array(file[key])
+            else:
+                ds_dict[key] = {}
+                for sub_key in file[key].keys():
+                    ds_dict[key][sub_key] = np.array(file[key][sub_key])
+
+
+
+
 # HDF5 파일 경로
 file_path = './SMAP_L3_SM_P_E_20240801_R19240_002.h5'
+smap = SmapDataset(file_path)
 
 # 파일 열기
 
@@ -11,6 +37,12 @@ with h5py.File(file_path, 'r') as file:
     def print_name(name):
         print(name)
     file.visit(print_name)
+    latitudes_am = file['Soil_Moisture_Retrieval_Data_AM/latitude'][:]
+    longitudes_am = file['Soil_Moisture_Retrieval_Data_AM/longitude'][:]
+    latitudes_pm = file['Soil_Moisture_Retrieval_Data_PM/latitude_pm'][:]
+    longitudes_pm = file['Soil_Moisture_Retrieval_Data_PM/longitude_pm'][:]
+
+
 
     # 위도와 경도 데이터셋 로드
     if 'Soil_Moisture_Retrieval_Data_AM/latitude' in file and 'Soil_Moisture_Retrieval_Data_AM/longitude' in file:
