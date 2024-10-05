@@ -29,8 +29,15 @@ def np_array_to_gray_image(np_array, vmin, vmax):
 
 def merge_img(img1, img2):
     sum_img = img1.copy()
-    sum_img[sum_img ==0] = img2[sum_img ==0]
+    # 결측치 비율을 계산하는 함수
 
+    if img1.dtype == np.float32:
+        sum_img[sum_img == -9999.0] = img2[sum_img == -9999.0]
 
+    elif img1.dtype == np.uint16:
+        sum_img[sum_img == 65534] = img2[sum_img == 65534]
+
+    elif img1.dtype == np.uint8:
+        sum_img[sum_img == 254] = img2[sum_img == 254]
 
     return sum_img
