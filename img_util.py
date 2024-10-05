@@ -13,5 +13,24 @@ def np_array_to_rgba_image(np_array, vmin, vmax):
     colormap = plt.cm.plasma
     rgba_array = colormap(normalized_array)
     rgba_array[..., 3] = (normalized_array > 0).astype(np.float32)  # Make 0 values transparent
-
+    rgba_array = (rgba_array * 255).astype(np.uint8)
     return rgba_array
+
+
+def np_array_to_gray_image(np_array, vmin, vmax):
+    normalized_array = (np.clip(np_array, vmin, vmax) - vmin) / (vmax-vmin)  # Ensure values are within 0-1500
+
+    # uint8 gray img (0~255)  변환
+    gray_array = (normalized_array * 255).astype(np.uint8)
+
+
+    return gray_array
+
+
+def merge_img(img1, img2):
+    sum_img = img1.copy()
+    sum_img[sum_img ==0] = img2[sum_img ==0]
+
+
+
+    return sum_img
