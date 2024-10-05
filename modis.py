@@ -5,12 +5,6 @@ import requests
 from pydap.client import open_url
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
-# MOD11A1.A2024276.h20v06.061.2024277100817
-# MOD11A1.A2024276.h20v05.061.2024277100827
-# MOD11A1.A2024276.h21v06.061.2024277101035
-# MOD11A1.A2024276.h21v05.061.2024277100832
-#
-
 
 import numpy as np
 
@@ -22,7 +16,7 @@ class ModisL4Dataset:
         self.field_list = ['LST_Day_1km', 'LST_Night_1km']
         self.desc = "MODIS/Terra Land Surface Temperature/Emissivity Daily L3 Global 1km SIN Grid V061"
         self.data_shape = (2400, 2400)
-
+        self.dict_ds = {}
         edl_token = 'eyJ0eXAiOiJKV1QiLCJvcmlnaW4iOiJFYXJ0aGRhdGEgTG9naW4iLCJzaWciOiJlZGxqd3RwdWJrZXlfb3BzIiwiYWxnIjoiUlMyNTYifQ.eyJ0eXBlIjoiVXNlciIsInVpZCI6Imx6YWsiLCJleHAiOjE3MzI3ODI5NTcsImlhdCI6MTcyNzU5ODk1NywiaXNzIjoiaHR0cHM6Ly91cnMuZWFydGhkYXRhLm5hc2EuZ292In0.CllLCWRe-eTXYG9S6grq63e62eGeOMR4YKcyRkvPJAn4uvfSr8mttJYiQHB9ByPbmIqFyp_xf5iOTlCVsJ4TyIPHvK63s40jE9WJPpwja_DgZZdUbLrRHDkMntLq_I4qaHKvvciqn6i6RnTQ8r5S4d1qROKLWyS0b-ELG07rv-3b5BZ9F5dIiLZFLhp06su6B6JFQpMx9GJ976kaTiPa-B918MtcoykiSrmp_YTE0o_JwjC8JWkUzcTOJmf6heegONqDtF5tTzmWo2cxMq5rFn33m9IyGjjxNvrFHqVoZwpfSm6-v5j4GH6k8rUul_NmvH_cxAkPpEQJ9xbmIz1_WQ'
 
         auth_hdr = "Bearer " + edl_token
@@ -42,7 +36,7 @@ class ModisL4Dataset:
 
         # np array로 바꿀수 있는것만 변환
 
-        self.dict_ds={}
+
 
 
         for key in self.field_list:
@@ -52,21 +46,6 @@ class ModisL4Dataset:
             bottom_row = np.hstack([np.array(dataset_1[key]), np.array(dataset_3[key])])
             self.dict_ds[key] =np.vstack([top_row, bottom_row])
 
-            normalized_array = (np.clip(self.dict_ds[key], 280, 350)-280.0 )/70 # Ensure values are within 0-1500
-
-            colormap = plt.cm.plasma
-            rgba_array = colormap(normalized_array)
-            rgba_array[..., 3] = (normalized_array > 0).astype(np.float32)  # Make 0 values transparent
-
-            rgb_image = (rgba_array * 255).astype(np.uint8)
-
-
-
-            # Save the RGB image
-            plt.imsave(key+'_gradient_rgb_image.png', rgb_image)
-
-
-            # Display the RGB image
 
             print(key + " loaded")
 
