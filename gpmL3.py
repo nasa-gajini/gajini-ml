@@ -25,7 +25,10 @@ class GpmL3Dataset:
 
 
 
-gpm3 = GpmL3Dataset()
 
+if __name__ == '__main__':
+    gpm3 = GpmL3Dataset()
+    precipitationCal = gpm3.dict_ds['precipitationCal']
+    print(precipitationCal.shape)
 
 
