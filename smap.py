@@ -29,7 +29,7 @@ class SmapDataset:
 
 if __name__ == '__main__':
     # HDF5 파일 경로
-    file_path = './SMAP_L3_SM_P_E_20240801_R19240_002.h5'
+    file_path = './data/SMAP_L3_SM_P_E_20240801_R19240_002.h5'
     smap = SmapDataset(file_path)
     moi = smap.ds_dict['Soil_Moisture_Retrieval_Data']['soil_moisture']
     print(moi.shape)
