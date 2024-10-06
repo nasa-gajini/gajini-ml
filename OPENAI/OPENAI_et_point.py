@@ -1,39 +1,32 @@
+# import xarray as xr
+# import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
+#
+# # File path to the uploaded NetCDF file
+# file_path = './data/Vegetation_ET/FLDAS_NOAH01_C_GL_M.A202408.001.nc'
+#
+# # Open the NetCDF file using xarray
+# ds = xr.open_dataset(file_path)
+#
+# # Evap_tavg 변수 추출
+# evap_data = ds['Evap_tavg']
+#
+# print(evap_data)
+# print(evap_data['X'])
+#
+# # 특정 위도(Y)와 경도(X) 좌표 선택 (예시: 경도 120, 위도 -30)
+# lon = 120  # 경도
+# lat = -30  # 위도
+#
+# # 가장 가까운 좌표에 해당하는 값을 추출
+# evap_value = evap_data.sel(X=lon, Y=lat, method='nearest').values
+#
+# # 출력
+# print(f'경도 {lon}, 위도 {lat}에서의 증발산 값: {evap_value}')
 
-
-#--------------------------------------------------------
-# SMAP 데이터 변수 값 샘플
-# Soil moisture (토양 수분 함량): 0.2 (단위: m³/m³, 0에서 1 사이의 값, 0은 매우 건조, 1은 매우 습함)
-# Vegetation water content (식물 수분 함량): 0.15 (단위: kg/m², 식물 내 수분의 양)
-# Vegetation opacity (식물 불투명도): 0.8 (식물의 광학적 두께, 0은 완전히 투명, 1은 불투명)
-# Bulk density (토양의 부피 밀도): 1.3 (단위: g/cm³, 일반적으로 1.1~1.7 g/cm³ 범위)
-# Clay fraction (토양 내 점토 함량): 0.25 (0에서 1 사이의 값, 1은 100% 점토)
-# Surface temperature (지표면 온도): 300 (단위: K, 켈빈, 대략 섭씨 27도)
-# Static Water Body Fraction (정적 수체 비율): 0.1 (수역의 비율, 0에서 1 사이)
-# NDVI (Normalized Difference Vegetation Index) 값 샘플
-#--------------------------------------------------------
-# SMAP
-soil_moisture = 0.2
-vegetation_water_content = 0.15
-vegetation_opacity = 0.8
-bulk_density = 1.3
-clay_fraction = 0.25
-surface_temperature = 300  # K (Kelvin)
-static_water_body_fraction = 0.1
-
-#--------------------------------------------------------
-# NDVI
-#--------------------------------------------------------
-# NDVI: 0.65 (0에서 1 사이의 값, 1은 완전히 녹색 식물로 덮인 상태, 0은 식생이 거의 없음)
-# NDVI
-ndvi = 0.65
-
-#--------------------------------------------------------
-# ET_POINT
-# ET_POINT (Evapotranspiration, 증발산량) 값 샘플
-#--------------------------------------------------------
-et = 4.5
 
 import os
+import base64
 import requests
 import xarray as xr
 from dotenv import load_dotenv
@@ -43,6 +36,20 @@ load_dotenv()
 
 # Get OpenAI API key from .env
 openai_api_key = os.getenv("OPENAI_API_KEY")
+
+
+# Function to extract Evap_tavg value based on lon and lat
+def extract_evap_data(file_path, lon, lat):
+    # Open the NetCDF file using xarray
+    ds = xr.open_dataset(file_path)
+
+    # Evap_tavg 변수 추출
+    evap_data = ds['Evap_tavg']
+
+    # 가장 가까운 좌표에 해당하는 값을 추출
+    evap_value = evap_data.sel(X=lon, Y=lat, method='nearest').values
+
+    return evap_value
 
 
 # Function to query OpenAI API for the extracted data

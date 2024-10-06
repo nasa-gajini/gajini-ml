@@ -10,7 +10,6 @@ load_dotenv()
 # Get OpenAI API key from .env
 openai_api_key = os.getenv("OPENAI_API_KEY")
 
-
 # Function to read and display image
 def read_image(image_path):
     image = Image.open(image_path)

@@ -37,8 +37,8 @@ def visualize_egypt(evap_2024_clipped, evap_2023_clipped, save_path):
     axes[1].set_xlabel('Longitude')
     axes[1].set_ylabel('Latitude')
 
-    # Plot difference in Egypt data (2024 - 2023)
-    egypt_diff.plot(ax=axes[2], cmap='RdBu_r')
+    # Plot difference in Egypt data (2024 - 2023) with limited range to enhance visibility of small differences
+    egypt_diff.plot(ax=axes[2], cmap='RdBu_r', vmin=-1e-6, vmax=1e-6)  # 범위를 설정하여 차이를 강조
     axes[2].set_title('Difference in Evapotranspiration (2024 - 2023) (Egypt)')
     axes[2].set_xlabel('Longitude')
     axes[2].set_ylabel('Latitude')
@@ -74,10 +74,10 @@ def clip_evap_data_to_egypt(evap_2024, evap_2023, geojson_path):
 
 
 def main():
-    file_path_2024 = './data/Vegetation_ET/FLDAS_NOAH01_C_GL_M.A202408.001.nc'
-    file_path_2023 = './data/Vegetation_ET/FLDAS_NOAH01_C_GL_M.A202308.001.nc'
-    geojson_path = './data/egypt.geojson'
-    img_dir = './data/img/'
+    file_path_2024 = '../data/Vegetation_ET/FLDAS_NOAH01_C_GL_M.A202408.001.nc'
+    file_path_2023 = '../data/Vegetation_ET/FLDAS_NOAH01_C_GL_M.A202308.001.nc'
+    geojson_path = '../data/egypt.geojson'
+    img_dir = '../data/img/'
 
     # Ensure the output directory exists
     if not os.path.exists(img_dir):
@@ -91,7 +91,7 @@ def main():
 
     # Visualize and save the Egypt-only plot (1x3 layout)
     visualize_egypt(evap_2024_clipped, evap_2023_clipped,
-                    save_path=os.path.join(img_dir, 'egypt_evap_combined.png'))
+                    save_path=os.path.join(img_dir, 'egypt_evap_combined_emphasized.png'))
 
 
 if __name__ == "__main__":

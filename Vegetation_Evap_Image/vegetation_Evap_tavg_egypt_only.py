@@ -74,10 +74,10 @@ def clip_evap_data_to_egypt(evap_2024, evap_2023, geojson_path):
 
 
 def main():
-    file_path_2024 = './data/Vegetation_ET/FLDAS_NOAH01_C_GL_M.A202408.001.nc'
-    file_path_2023 = './data/Vegetation_ET/FLDAS_NOAH01_C_GL_M.A202308.001.nc'
-    geojson_path = './data/egypt.geojson'
-    img_dir = './data/img/'
+    file_path_2024 = '../data/Vegetation_ET/FLDAS_NOAH01_C_GL_M.A202408.001.nc'
+    file_path_2023 = '../data/Vegetation_ET/FLDAS_NOAH01_C_GL_M.A202308.001.nc'
+    geojson_path = '../data/egypt.geojson'
+    img_dir = '../data/img/'
 
     # Ensure the output directory exists
     if not os.path.exists(img_dir):
