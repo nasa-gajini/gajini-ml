@@ -2,7 +2,7 @@ import xarray as xr
 import matplotlib.pyplot as plt
 
 # File path to the uploaded NetCDF file
-file_path = '../data/ET_Evapospiration/FLDAS_NOAH01_C_GL_M.A202408.001.nc'
+file_path = '../data/Vegetation_ET/FLDAS_NOAH01_C_GL_M.A202408.001.nc'
 
 # Open the NetCDF file using xarray
 ds = xr.open_dataset(file_path)

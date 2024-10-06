@@ -31,12 +31,6 @@ class SmapDataset:
 
 
 
-
-
-
-
-
-
     def remove_outlier(self, data):
         # float32는 결측 데이터가 -9999.0, UINT16은 65534, UINT8은 254
         # numpy array의 타입을 확인하고 결측치를 모두 0 혹은 0.0으로 변환
@@ -60,9 +54,6 @@ class SmapDataset:
         else:
             fill_value_rate = -1.0
         return fill_value_rate
-
-
-
 
 
     # 다른 일자 데이터셋 클래스를 받아서 ds_dict를 순회하면 모든 numpy array를 merge_img 함수로 합치는 함수
@@ -155,15 +146,11 @@ class SmapDataset:
             print(p[0])
 
 
-
 if __name__ == '__main__':
     # HDF5 파일 경로
     day_1 = '20240801'
     day_2 = '20240802'
     day_3 = '20240803'
-
-
-
 
     smap_0801 = SmapDataset('./SMAP_L3_SM_P_E_'+day_1+'_R19240_002.h5')
     smap_0802 = SmapDataset('./SMAP_L3_SM_P_E_'+day_2+'_R19240_002.h5')
